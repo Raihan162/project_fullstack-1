@@ -13,8 +13,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      lecturers_id: {
+      users_id: {
         allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      major_id: {
         type: Sequelize.INTEGER
       },
       createdAt: {

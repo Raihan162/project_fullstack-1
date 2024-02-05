@@ -9,9 +9,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      students_id: {
+      users_id: {
         allowNull: false,
-        type: Sequelize.INTEGER
+          type: Sequelize.STRING
       },
       courses_id: {
         allowNull: false,

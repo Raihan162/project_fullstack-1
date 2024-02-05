@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.students, {
-        foreignKey: 'students_id'
+      this.belongsTo(models.users, {
+        foreignKey: 'users_id'
       }),
         this.belongsTo(models.courses, {
           foreignKey: 'courses_id'
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     };
   };
   registrations.init({
-    students_id: DataTypes.INTEGER,
+    users_id: DataTypes.STRING,
     courses_id: DataTypes.INTEGER,
     registration_date: DataTypes.DATE
   }, {
