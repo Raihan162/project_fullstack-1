@@ -10,6 +10,7 @@ const Student = require('./server/api/student');
 const Lecturer = require('./server/api/lecturer');
 const Course = require('./server/api/course');
 const Registration = require('./server/api/registration');
+const User = require('./server/api/user');
 
 dotenv.config();
 
@@ -76,6 +77,7 @@ app.use('/student', Student);
 app.use('/lecturer', Lecturer);
 app.use('/course', Course);
 app.use('/registration', Registration);
+app.use('/user', User);
 
 // Sys ping api 
 app.get('/sys/ping', (req, res) => {
