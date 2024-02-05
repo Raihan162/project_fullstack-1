@@ -32,14 +32,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       allowNull: false,
-      autoIncrement: false,
-      primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      type: DataTypes.STRING,
     },
     email: DataTypes.STRING,
     contact: DataTypes.STRING,
     major_id: DataTypes.INTEGER,
+    password: DataTypes.STRING,
     is_student: DataTypes.BOOLEAN,
     date_in: DataTypes.STRING
   }, {

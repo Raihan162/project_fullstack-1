@@ -22,6 +22,9 @@ module.exports = {
       major_id: {
         type: Sequelize.INTEGER
       },
+      password: {
+        type: Sequelize.STRING
+      },
       is_student: {
         type: Sequelize.BOOLEAN
       },
