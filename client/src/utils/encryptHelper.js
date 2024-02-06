@@ -1,4 +1,4 @@
-import { AES } from 'crypto-js'
+import { AES } from 'crypto-js';
 
 import config from '@config/index';
 
