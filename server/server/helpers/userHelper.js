@@ -26,8 +26,9 @@ const __generateToken = (data) => {
     return jwt.sign(data, jwtSecretToken, { expiresIn: jwtExpiresIn });
 }
 
-const register = async (name, email, contact, major, password) => {
+const register = async (name, email, contact, major_id, password) => {
     try {
+        console.log(name, email, contact, major_id, password, '<<<<<<< HELPER')
         const checkEmail = await db.users.findOne({
             where: {
                 email,
@@ -44,11 +45,11 @@ const register = async (name, email, contact, major, password) => {
         await db.users.create({
             id: uuidv4(),
             name,
-            major_id: major,
+            major_id,
             contact,
             email,
             password: hashedPass,
-            is_student: false
+            is_student: true
         });
 
         return Promise.resolve(true);

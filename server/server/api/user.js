@@ -1,15 +1,24 @@
 const Router = require('express').Router();
+const CryptoJS = require('crypto-js');
 
 const Validation = require('../helpers/validationHelper');
 const UserHelper = require('../helpers/userHelper');
 const GeneralHelper = require('../helpers/generalHelper');
 const Middleware = require('../middleware/studentMiddleware');
+const { decryptPayload } = require('../utils/decryptHelper');
+const secretKey = 'super_strong_key';
 
 const register = async (request, reply) => {
     try {
-        const { name, email, contact, major, password } = request.body
+        let data = request.body;
+        console.log(data, '<<< REQ DATA')
+        let name = data.name;
+        let email = decryptPayload(data?.email);
+        let contact = decryptPayload(data?.contact);
+        let major_id = Number(decryptPayload(data?.major_id));
+        let password = decryptPayload(data?.password);
 
-        const response = await UserHelper.register(name, email, contact, major, password)
+        const response = await UserHelper.register(name, email, contact, major_id, password)
 
         return reply.send({
             message: 'Register Success',
