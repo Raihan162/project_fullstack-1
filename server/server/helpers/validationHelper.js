@@ -4,10 +4,10 @@ const Boom = require('boom');
 const studentAddValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().required(),
-    major: Joi.string().required(),
+    major_id: Joi.string().required(),
     contact: Joi.number().required(),
     email: Joi.string().required(),
-    password: Joi.string().required()
+    password: Joi.string().required().min(6)
   });
 
   if (schema.validate(data).error) {
