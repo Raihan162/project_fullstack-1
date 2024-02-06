@@ -28,7 +28,6 @@ const __generateToken = (data) => {
 
 const register = async (name, email, contact, major_id, password) => {
     try {
-        console.log(name, email, contact, major_id, password, '<<<<<<< HELPER')
         const checkEmail = await db.users.findOne({
             where: {
                 email,
@@ -67,13 +66,13 @@ const loginStudent = async (email, password) => {
             }
         });
         if (_.isEmpty(student)) {
-            return Promise.reject(Boom.notFound('STUDENT_NOT_FOUND'));
+            return Promise.reject(Boom.notFound('Student not found'));
         };
 
         const isPassMatched = __comparePassword(password, student.password);
         console.log(isPassMatched)
         if (!isPassMatched) {
-            return Promise.reject(Boom.badRequest('WRONG_CREDENTIALS'));
+            return Promise.reject(Boom.badRequest('Wrong Password'));
         };
 
         const token = __generateToken({
