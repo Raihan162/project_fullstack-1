@@ -11,12 +11,14 @@ const secretKey = 'super_strong_key';
 const register = async (request, reply) => {
     try {
         let data = request.body;
-        console.log(data, '<<< REQ DATA')
+        
         let name = data.name;
         let email = decryptPayload(data?.email);
         let contact = decryptPayload(data?.contact);
         let major_id = Number(decryptPayload(data?.major_id));
         let password = decryptPayload(data?.password);
+
+        Validation.studentAddValidation({ name, email, contact, major_id, password })
 
         const response = await UserHelper.register(name, email, contact, major_id, password)
 
