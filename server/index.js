@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const Boom = require('boom');
+const cors = require('cors')
 
 const app = express();
 const Port = process.env.NODEJS_PORT || 8080;
@@ -11,10 +12,12 @@ const Lecturer = require('./server/api/lecturer');
 const Course = require('./server/api/course');
 const Registration = require('./server/api/registration');
 const User = require('./server/api/user');
+const Major = require('./server/api/major');
 
 dotenv.config();
 
 // Middleware
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -78,6 +81,7 @@ app.use('/lecturer', Lecturer);
 app.use('/course', Course);
 app.use('/registration', Registration);
 app.use('/user', User);
+app.use('/major', Major);
 
 // Sys ping api 
 app.get('/sys/ping', (req, res) => {
