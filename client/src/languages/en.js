@@ -7,4 +7,18 @@ export default {
   app_popup_error_title: 'Something went wrong!',
   app_popup_error_message: 'Sorry, an error has occurred. Please try again later',
   app_popup_close_button_label: 'Close',
+
+  register: 'Register',
+  register_fullname: 'Full Name',
+  register_email: 'Email Address',
+  register_contact: 'Phone Number',
+  register_password: 'Password',
+  register_major: 'Major',
+
+  login: 'Sign In',
+  login_dont_have_account: "Don't have an account? Sign Up",
+
+  submit:'Submit',
+  next: 'Next',
+  back: 'Back'
 };
