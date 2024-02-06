@@ -11,7 +11,7 @@ const secretKey = 'super_strong_key';
 const register = async (request, reply) => {
     try {
         let data = request.body;
-        
+
         let name = data.name;
         let email = decryptPayload(data?.email);
         let contact = decryptPayload(data?.contact);
@@ -33,6 +33,8 @@ const register = async (request, reply) => {
 
 const loginStudent = async (request, reply) => {
     try {
+        Validation.login(request.body);
+
         const { email, password } = request.body;
 
         const response = await UserHelper.loginStudent(email, password)

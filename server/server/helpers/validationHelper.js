@@ -37,8 +37,20 @@ const courseAddValidation = (data) => {
   };
 };
 
+const login = (data) => {
+  const schema = Joi.object({
+    email: Joi.string().required(),
+    password: Joi.string().required()
+  });
+
+  if (schema.validate(data).error) {
+    throw Boom.badRequest(schema.validate(data).error);
+  };
+}
+
 module.exports = {
   studentAddValidation,
   lecturerAddValidation,
-  courseAddValidation
+  courseAddValidation,
+  login
 };
