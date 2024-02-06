@@ -59,6 +59,9 @@ const register = async (name, email, contact, major_id, password) => {
 
 const loginStudent = async (email, password) => {
     try {
+        if (!email || !password) {
+            return Promise.reject(Boom.badRequest('Please fill username and password'))
+        }
         const student = await db.users.findOne({
             where: {
                 email,
@@ -72,7 +75,7 @@ const loginStudent = async (email, password) => {
         const isPassMatched = __comparePassword(password, student.password);
         console.log(isPassMatched)
         if (!isPassMatched) {
-            return Promise.reject(Boom.badRequest('Wrong Password'));
+            return Promise.reject(Boom.badRequest('Wrong password'));
         };
 
         const token = __generateToken({
