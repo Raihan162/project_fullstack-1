@@ -5,10 +5,12 @@ import clientReducer, { storedKey as storedClientState } from '@containers/Clien
 import languageReducer from '@containers/Language/reducer';
 
 import { mapWithPersistor } from './persistence';
+import registerReducer, { storedKey as storedRegisterState } from '@pages/Register/reducer';
 
 const storedReducers = {
   app: { reducer: appReducer, whitelist: storedAppState },
   client: { reducer: clientReducer, whitelist: storedClientState },
+  register: { reducer: registerReducer, whitelist: storedRegisterState }
 };
 
 const temporaryReducers = {
