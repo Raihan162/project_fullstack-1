@@ -116,6 +116,32 @@ const getCourseByMajor = async (dataToken) => {
     } catch (error) {
         return Promise.reject(error);
     }
+};
+
+const getCourseByID = async (dataToken) => {
+    try {
+        const response = await db.registrations.findAll({
+            where: {
+                users_id: dataToken.id
+            },
+            include: [{
+                model: db.courses,
+                include: {
+                    model: db.users,
+                    attributes: ['name', 'email', 'contact']
+                },
+                attributes: ['id', 'title']
+            }, {
+                model: db.users,
+                attributes: ['id', 'name', 'email', 'contact']
+            }],
+            attributes: ['registration_date']
+        });
+
+        return Promise.resolve(response);
+    } catch (error) {
+        return Promise.reject(error);
+    }
 }
 
 module.exports = {
@@ -123,5 +149,6 @@ module.exports = {
     addCourse,
     deleteCourses,
     updateCourses,
-    getCourseByMajor
+    getCourseByMajor,
+    getCourseByID
 };
