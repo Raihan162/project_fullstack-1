@@ -35,7 +35,10 @@ const loginStudent = async (request, reply) => {
     try {
         Validation.login(request.body);
 
-        const { email, password } = request.body;
+        const data = request.body;
+
+        let email = decryptPayload(data?.email);
+        let password = decryptPayload(data?.password);
 
         const response = await UserHelper.loginStudent(email, password)
         return reply.send({
