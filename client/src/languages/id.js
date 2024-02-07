@@ -18,6 +18,17 @@ export default {
   login: 'Masuk',
   login_dont_have_account: "Belum memiliki akun? Daftar disini",
 
+  nav_dashboard: 'Dashboard',
+  nav_student_info: 'Informasi Mahasiswa',
+  nav_my_course: 'Mata Kuliah Saya',
+  nav_logout: 'Keluar',
+
+  student_info_name: 'Nama',
+  student_info_email: 'Email',
+  student_info_contact: 'Nomor Telepon',
+  student_info_major: 'Jurusan',
+  student_info_change_photo: 'Ganti Foto',
+
   submit: 'Kirim',
   next: 'Selanjutnya',
   back: 'Sebelumnya'
