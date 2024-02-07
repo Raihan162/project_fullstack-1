@@ -1,0 +1,20 @@
+@import '../../styles/base.scss';
+
+.container {
+    @include directionY;
+    flex-direction: column-reverse;
+
+    @include apply-at-xl-size {
+        @include directionX;
+    }
+
+    gap: 30px;
+}
+
+.otherCourseContainer {
+    flex-basis: 50%;
+}
+
+.myCourseContainer {
+    flex-basis: 50%;
+}
