@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { setLocale, setTheme } from '@containers/App/actions';
-
 import * as React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
+
+import { setLocale, setTheme } from '@containers/App/actions';
+import { selectLocale, selectTheme } from '@containers/App/selectors';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,31 +20,27 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
-import { Link, useNavigate } from 'react-router-dom';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Avatar, Menu, MenuItem } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import GroupsIcon from '@mui/icons-material/Groups';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import PersonIcon from '@mui/icons-material/Person';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 // import { setData, setLogin } from '@pages/Login/actions';
 // import logo from '../../assets/logo.png';
 import classes from './style.module.scss';
-import { selectLocale, selectTheme } from '@containers/App/selectors';
-import { createStructuredSelector } from 'reselect';
 
-const drawerWidth = 300;
+const drawerWidth = 260;
 
 const SecondLayout = ({ locale, theme, children }) => {
     const dispatch = useDispatch();
@@ -92,12 +93,12 @@ const SecondLayout = ({ locale, theme, children }) => {
         navigate('/student-info');
     };
 
-    const toMyStudent = () => {
-        navigate('/my-student');
+    const toMyCourse = () => {
+        navigate('/my-course');
     };
 
-    const toEnrollStudent = () => {
-        navigate('/enroll-student');
+    const toRegistratioin = () => {
+        navigate('/registration');
     };
 
     const handleLogout = () => {
@@ -110,46 +111,51 @@ const SecondLayout = ({ locale, theme, children }) => {
         <div>
             <Toolbar />
             <Divider />
-            <List>
-                <ListItem disablePadding>
-                    <ListItemButton onClick={() => toDashboard()}>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <FormattedMessage id="nav_dashboard" />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-            <List>
-                <ListItem disablePadding>
-                    <ListItemButton onClick={() => toStudentInfo()}>
-                        <ListItemIcon>
-                            <GroupsIcon />
-                        </ListItemIcon>
-                        <FormattedMessage id="nav_student_info" />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-            <List>
-                <ListItem disablePadding>
-                    <ListItemButton onClick={() => toMyStudent()}>
-                        <ListItemIcon>
-                            <PeopleAltIcon />
-                        </ListItemIcon>
-                        {/* <ListItemText primary="My Student" /> */}
-                        <FormattedMessage id="nav_my_course" />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-
-            <Link to="/enroll">
+            <Link to="/dashboard">
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
-                                <HowToRegIcon />
+                                <DashboardIcon />
                             </ListItemIcon>
-                            {/* <FormattedMessage id="nav_enroll_student" /> */}
+                            <FormattedMessage id="nav_dashboard" />
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+            </Link>
+            <Link to="/student-info">
+                <List>
+                    <ListItem disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <PersonIcon />
+                            </ListItemIcon>
+                            <FormattedMessage id="nav_student_info" />
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+            </Link>
+            <Link to="/my-course">
+                <List>
+                    <ListItem disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <FormatListBulletedIcon />
+                            </ListItemIcon>
+                            <FormattedMessage id="nav_my_course" />
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+            </Link>
+
+            <Link to="/registration">
+                <List>
+                    <ListItem disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <EditNoteIcon />
+                            </ListItemIcon>
+                            <FormattedMessage id="nav_registration" />
                         </ListItemButton>
                     </ListItem>
                 </List>
@@ -161,7 +167,6 @@ const SecondLayout = ({ locale, theme, children }) => {
                         <ListItemIcon>
                             <ExitToAppIcon />
                         </ListItemIcon>
-
                         <FormattedMessage id="nav_logout" />
                     </ListItemButton>
                 </ListItem>
