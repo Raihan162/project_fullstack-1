@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { doLogin } from './actions';
 import { Toaster } from 'react-hot-toast';
+import encryptPayload from '@utils/encryptHelper';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -33,8 +34,13 @@ export default function Login() {
     setLogin({ ...login, [type]: value })
   };
 
+
   const onSubmit = () => {
-    dispatch(doLogin(login, () => {
+    const loginUser = {
+      email: encryptPayload(login?.email),
+      password: encryptPayload(login?.password)
+    }
+    dispatch(doLogin(loginUser, () => {
       navigate('/dashboard');
     }))
   }
