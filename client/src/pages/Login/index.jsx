@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,6 +13,10 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { doLogin } from './actions';
+import { Toaster } from 'react-hot-toast';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -21,16 +24,20 @@ const defaultTheme = createTheme();
 
 export default function Login() {
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const [login, setLogin] = useState({});
+
+  const onChangeHandler = (value, type) => {
+    setLogin({ ...login, [type]: value })
   };
+
+  const onSubmit = () => {
+    dispatch(doLogin(login, () => {
+      navigate('/dashboard');
+    }))
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -66,7 +73,7 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               <FormattedMessage id='login' />
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -76,6 +83,7 @@ export default function Login() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e) => onChangeHandler(e.target.value, 'email')}
               />
               <TextField
                 margin="normal"
@@ -86,18 +94,20 @@ export default function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => onChangeHandler(e.target.value, 'password')}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
               <Button
-                type="submit"
+                // type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={onSubmit}
               >
-                Sign In
+                <FormattedMessage id='login' />
               </Button>
               <Grid container>
                 <Grid item xs>
@@ -115,6 +125,7 @@ export default function Login() {
           </Box >
         </Grid >
       </Grid >
+      <Toaster />
     </ThemeProvider >
   );
 };
