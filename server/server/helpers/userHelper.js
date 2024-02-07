@@ -64,8 +64,7 @@ const loginStudent = async (email, password) => {
         }
         const student = await db.users.findOne({
             where: {
-                email,
-                is_student: true
+                email
             }
         });
         if (_.isEmpty(student)) {
