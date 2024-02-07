@@ -21,6 +21,7 @@ export default {
   nav_dashboard: 'Dashboard',
   nav_student_info: 'Student Info',
   nav_my_course: 'My Course',
+  nav_registration: 'Registration',
   nav_logout: 'Logout',
 
   student_info_name: 'Name',

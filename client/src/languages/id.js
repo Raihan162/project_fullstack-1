@@ -21,6 +21,7 @@ export default {
   nav_dashboard: 'Dashboard',
   nav_student_info: 'Informasi Mahasiswa',
   nav_my_course: 'Mata Kuliah Saya',
+  nav_registration: 'Registrasi',
   nav_logout: 'Keluar',
 
   student_info_name: 'Nama',
