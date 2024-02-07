@@ -1,4 +1,5 @@
 import MainLayout from '@layouts/MainLayout';
+import SecondLayout from '@layouts/SecondLayout';
 
 import Home from '@pages/Home';
 import Login from '@pages/Login';
@@ -6,7 +7,8 @@ import Register from '@pages/Register';
 import NotFound from '@pages/NotFound';
 import Dashboard from '@pages/Dashboard';
 import StudentInfo from '@pages/StudentInfo';
-import SecondLayout from '@layouts/SecondLayout';
+import MyCourse from '@pages/MyCourse';
+import Registration from '@pages/Registration';
 
 const routes = [
   {
@@ -42,6 +44,20 @@ const routes = [
     name: 'Stundent Info',
     protected: false,
     component: StudentInfo,
+    layout: SecondLayout,
+  },
+  {
+    path: '/my-course',
+    name: 'My Course',
+    protected: false,
+    component: MyCourse,
+    layout: SecondLayout,
+  },
+  {
+    path: '/registration',
+    name: 'Registration',
+    protected: false,
+    component: Registration,
     layout: SecondLayout,
   },
   { path: '*', name: 'Not Found', component: NotFound, layout: MainLayout, protected: false },
