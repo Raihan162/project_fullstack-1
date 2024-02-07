@@ -2,6 +2,8 @@ const Router = require('express').Router();
 
 const CourserHelper = require('../helpers/courseHelper');
 const Validation = require('../helpers/validationHelper');
+const GeneralHelper = require('../helpers/generalHelper');
+const Middleware = require('../middleware/studentMiddleware');
 
 const listCourse = async (request, reply) => {
     try {
@@ -91,9 +93,25 @@ const updateCourse = async (request, reply) => {
     };
 };
 
+const getCourseByMajor = async (request, reply) => {
+    try {
+        const dataToken = request.body.studentToken
+        const response = await CourserHelper.getCourseByMajor(dataToken);
+        return reply
+            .status(200)
+            .send({
+                message: 'Get Course By Major Success!',
+                response
+            });
+    } catch (error) {
+        return reply.send(GeneralHelper.errorResponse(error))
+    }
+}
+
 Router.get('/list', listCourse);
 Router.post('/add', addCourse);
 Router.delete('/delete', deleteCourse);
 Router.patch('/update', updateCourse);
+Router.get('/course-by-major', Middleware.validateToken, getCourseByMajor)
 
 module.exports = Router;

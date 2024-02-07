@@ -103,9 +103,25 @@ const updateCourses = async (id, title, lecturers_id) => {
     };
 };
 
+const getCourseByMajor = async (dataToken) => {
+    try {
+        const response = await db.courses.findAll({
+            where: {
+                major_id: dataToken.major_id
+            },
+            attributes: ['id', 'title']
+        })
+
+        return Promise.resolve(response);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
 module.exports = {
     getCourse,
     addCourse,
     deleteCourses,
-    updateCourses
+    updateCourses,
+    getCourseByMajor
 };
