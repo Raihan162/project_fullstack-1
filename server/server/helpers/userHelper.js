@@ -79,7 +79,8 @@ const loginStudent = async (email, password) => {
         };
 
         const token = __generateToken({
-            id: student.id
+            id: student.id,
+            is_student: student.is_student
         })
 
         return Promise.resolve({ token })
