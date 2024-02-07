@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import { connect, useDispatch } from 'react-redux';
+
+import { Button } from '@mui/material';
+import { getData } from './actions';
 
 import classes from './style.module.scss';
-import { Button } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { selectData } from './selector';
 
-export default function StudentInfo() {
+const StudentInfo = ({ data }) => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getData())
+    }, [dispatch])
+
     return (
         <div className={classes.container}>
             <div className={classes.photoContainer}>
@@ -19,30 +32,40 @@ export default function StudentInfo() {
                         <FormattedMessage id='student_info_name' />
                     </p>
                     <span>:</span>
-                    <p>Fahmi</p>
+                    <p>{data?.name}</p>
                 </div>
                 <div className={classes.info}>
                     <p className={classes.label}>
                         <FormattedMessage id='student_info_email' />
                     </p>
                     <span>:</span>
-                    <p>fahmi@gmail.com</p>
+                    <p>{data?.email}</p>
                 </div>
                 <div className={classes.info}>
                     <p className={classes.label}>
                         <FormattedMessage id='student_info_contact' />
                     </p>
                     <span>:</span>
-                    <p>0812398123</p>
+                    <p>{data?.contact}</p>
                 </div>
                 <div className={classes.info}>
                     <p className={classes.label}>
                         <FormattedMessage id='student_info_major' />
                     </p>
                     <span>:</span>
-                    <p>S1 Teknik Komputer</p>
+                    <p>{data?.major?.name}</p>
                 </div>
             </div>
         </div>
     )
 };
+
+StudentInfo.propTypes = {
+    data: PropTypes.object
+};
+
+const mapStateToProps = createStructuredSelector({
+    data: selectData
+});
+
+export default connect(mapStateToProps)(StudentInfo);

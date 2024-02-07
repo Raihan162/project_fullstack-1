@@ -8,7 +8,7 @@ const db = require('../../models');
 const GeneralHelper = require('../helpers/generalHelper');
 
 const jwtSecretToken = 'super_strong_key';
-const jwtExpiresIn = '15m';
+const jwtExpiresIn = '24h';
 const salt = bcrypt.genSaltSync(10);
 
 // eslint-disable-next-line arrow-body-style
@@ -89,7 +89,26 @@ const loginStudent = async (email, password) => {
     }
 };
 
+const getDetailUser = async (dataToken) => {
+    try {
+        const response = await db.users.findOne({
+            where: {
+                id: dataToken.id
+            },
+            include: {
+                model: db.majors,
+                attributes: ['id', 'name']
+            },
+            attributes: ['id', 'name', 'email', 'contact']
+        })
+        return Promise.resolve(response)
+    } catch (error) {
+        return Promise.reject(GeneralHelper.errorResponse(error));
+    }
+}
+
 module.exports = {
     register,
-    loginStudent
+    loginStudent,
+    getDetailUser
 }

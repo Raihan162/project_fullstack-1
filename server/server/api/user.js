@@ -44,13 +44,28 @@ const loginStudent = async (request, reply) => {
         return reply.send({
             message: 'Login Success',
             response
-        })
+        });
     } catch (error) {
-        return reply.send(GeneralHelper.errorResponse(error))
+        return reply.send(GeneralHelper.errorResponse(error));
+    }
+};
+
+const getDetailUser = async (request, reply) => {
+    try {
+        const dataToken = request.body.studentToken;
+        const response = await UserHelper.getDetailUser(dataToken);
+
+        return reply.send({
+            message: 'Get Detail User Success',
+            response
+        });
+    } catch (error) {
+        return reply.send(GeneralHelper.errorResponse(error));
     }
 }
 
-Router.post('/register-student', register)
-Router.post('/login-student', loginStudent)
+Router.post('/register-student', register);
+Router.post('/login-student', loginStudent);
+Router.get('/detail-user', Middleware.validateToken, getDetailUser);
 
 module.exports = Router;
