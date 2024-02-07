@@ -80,7 +80,8 @@ const loginStudent = async (email, password) => {
 
         const token = __generateToken({
             id: student.id,
-            is_student: student.is_student
+            is_student: student.is_student,
+            major_id: student.major_id
         })
 
         return Promise.resolve({ token })
