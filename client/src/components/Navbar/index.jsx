@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,12 +13,16 @@ import NightsStayIcon from '@mui/icons-material/NightsStay';
 import { setLocale, setTheme } from '@containers/App/actions';
 
 import classes from './style.module.scss';
+import { Button } from '@mui/material';
 
 const Navbar = ({ title, locale, theme }) => {
+
+  const location = useLocation()
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuPosition, setMenuPosition] = useState(null);
   const open = Boolean(menuPosition);
+  const checkLocation = location?.pathname.split('/')[1]
 
   const handleClick = (event) => {
     setMenuPosition(event.currentTarget);
@@ -37,6 +41,14 @@ const Navbar = ({ title, locale, theme }) => {
       dispatch(setLocale(lang));
     }
     handleClose();
+  };
+
+  const goLogin = () => {
+    navigate('/login');
+  };
+
+  const goRegister = () => {
+    navigate('/register');
   };
 
   const goHome = () => {
@@ -59,6 +71,19 @@ const Navbar = ({ title, locale, theme }) => {
             <div className={classes.lang}>{locale}</div>
             <ExpandMoreIcon />
           </div>
+          {
+            checkLocation === 'login' || checkLocation === 'register' ?
+              null
+              :
+              <div className={classes.buttons}>
+                <Button variant="outlined" onClick={() => goLogin()}>
+                  <FormattedMessage id='login' />
+                </Button>
+                <Button variant="contained" onClick={() => goRegister()}>
+                  <FormattedMessage id='register' />
+                </Button>
+              </div>
+          }
         </div>
         <Menu open={open} anchorEl={menuPosition} onClose={handleClose}>
           <MenuItem onClick={() => onSelectLang('id')} selected={locale === 'id'}>

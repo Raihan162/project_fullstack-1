@@ -5,6 +5,7 @@
   box-shadow: 0 0.25rem 0.75rem rgba(25, 49, 83, 0.2) !important;
   position: sticky;
   top: 0;
+
   .contentWrapper {
     @include directionX;
 
@@ -24,6 +25,7 @@
         height: 1.5rem;
         margin-right: 0.5rem;
       }
+
       .title {
         font-weight: 700;
       }
@@ -31,12 +33,14 @@
 
     .toolbar {
       @include directionX;
+
       .theme {
         @include directionX;
         align-items: center;
         margin-right: 0.5rem;
         cursor: pointer;
       }
+
       .toggle {
         @include directionX;
         align-items: center;
@@ -59,6 +63,11 @@
         .arrow {
           font-size: 1rem;
         }
+      }
+
+      .buttons {
+        @include directionX;
+        gap: 5px;
       }
     }
   }
