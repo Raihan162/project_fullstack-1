@@ -39,6 +39,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 // import { setData, setLogin } from '@pages/Login/actions';
 // import logo from '../../assets/logo.png';
 import classes from './style.module.scss';
+import { setLogin, setToken } from '@containers/Client/actions';
 
 const drawerWidth = 260;
 
@@ -103,7 +104,7 @@ const SecondLayout = ({ locale, theme, children }) => {
 
     const handleLogout = () => {
         dispatch(setLogin(false));
-        dispatch(setData({}));
+        dispatch(setToken(null));
         navigate('/login');
     };
 
