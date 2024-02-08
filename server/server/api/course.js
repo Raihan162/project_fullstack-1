@@ -16,11 +16,7 @@ const listCourse = async (request, reply) => {
                 response
             });
     } catch (err) {
-        return reply
-            .status(400)
-            .send({
-                message: err
-            });
+        return reply.send(GeneralHelper.errorResponse(error));
     };
 };
 
@@ -39,12 +35,7 @@ const addCourse = async (request, reply) => {
                 response
             });
     } catch (error) {
-        return reply
-            .status(400)
-            .send({
-                message: 'Add Course Failed!',
-                error: error?.message
-            });
+        return reply.send(GeneralHelper.errorResponse(error));
     };
 };
 
@@ -61,12 +52,7 @@ const deleteCourse = async (request, reply) => {
                 response
             });
     } catch (error) {
-        return reply
-            .status(400)
-            .send({
-                message: 'Delete Course Failed!',
-                error: error?.message
-            });
+        return reply.send(GeneralHelper.errorResponse(error));
     };
 };
 
@@ -84,12 +70,7 @@ const updateCourse = async (request, reply) => {
                 response
             });
     } catch (error) {
-        return reply
-            .status(400)
-            .send({
-                message: 'Update Course Failed!',
-                error: error?.message
-            });
+        return reply.send(GeneralHelper.errorResponse(error));
     };
 };
 
@@ -104,7 +85,7 @@ const getCourseByMajor = async (request, reply) => {
                 response
             });
     } catch (error) {
-        return reply.send(GeneralHelper.errorResponse(error))
+        return reply.send(GeneralHelper.errorResponse(error));
     }
 };
 

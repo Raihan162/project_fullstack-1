@@ -1,3 +1,4 @@
+const Boom = require('boom');
 const db = require('../../models/index');
 
 const getCourse = async () => {
@@ -25,7 +26,7 @@ const addCourse = async (title, lecturers_id) => {
         });
 
         if (!checkLecturer) {
-            throw new Error('Lecturer doesn`t exist');
+            return Promise.reject(Boom.badRequest('Lecturer not found'));
         };
 
         await db.courses.create({
@@ -48,7 +49,7 @@ const deleteCourses = async (id) => {
         });
 
         if (!checkCourse) {
-            throw new Error('Course doesn`t exist');
+            return Promise.reject(Boom.badRequest('Course not found'));
         };
 
         await db.courses.destroy({
@@ -83,7 +84,7 @@ const updateCourses = async (id, title, lecturers_id) => {
             });
 
             if (!checkLecturer) {
-                throw new Error('Lecturer doesn`t exist');
+                return Promise.reject(Boom.badRequest('Course not found'));
             };
         };
 
