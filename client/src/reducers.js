@@ -6,6 +6,7 @@ import languageReducer from '@containers/Language/reducer';
 import registerReducer, { storedKey as storedRegisterState } from '@pages/Register/reducer';
 import loginReducer, { storedKey as storedLoginState } from '@pages/Login/reducer';
 import detailUserReducer, { storedKey as storedDetailUserState } from '@pages/StudentInfo/reducer';
+import MyCourseReducer,{storedKey as storedCourseUserState} from '@pages/MyCourse/reducer';
 
 import { mapWithPersistor } from './persistence';
 
@@ -14,7 +15,8 @@ const storedReducers = {
   client: { reducer: clientReducer, whitelist: storedClientState },
   register: { reducer: registerReducer, whitelist: storedRegisterState },
   login: { reducer: loginReducer, whitelist: storedLoginState },
-  detailUser: { reducer: detailUserReducer, whitelist: storedDetailUserState }
+  detailUser: { reducer: detailUserReducer, whitelist: storedDetailUserState },
+  courseUser: { reducer: MyCourseReducer, whitelist: storedCourseUserState }
 };
 
 const temporaryReducers = {
