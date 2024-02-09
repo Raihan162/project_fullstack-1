@@ -9,7 +9,8 @@ const urls = {
   login: 'user/login-student',
   getMajor: 'major/list-major',
   detailUser: 'user/detail-user',
-  courseUser: 'course/course-by-id'
+  courseUser: 'course/course-by-id',
+  otherCourse: 'course/other-course'
 };
 
 export const callAPI = async (endpoint, method, header = {}, params = {}, data = {}) => {
@@ -40,8 +41,10 @@ export const login = (formData) => callAPI(urls.login, 'POST', {}, {}, formData)
 
 export const getDetailUser = () => {
   return callAPI(urls.detailUser, 'GET')
-}
+};
 
-export const courseUser = () => callAPI(urls.courseUser, 'GET')
+export const courseUser = () => callAPI(urls.courseUser, 'GET');
 
-export const getMajorAPI = (data) => callAPI(urls.getMajor, 'GET');
+export const otherCourse = () => callAPI(urls.otherCourse, 'GET');
+
+export const getMajorAPI = () => callAPI(urls.getMajor, 'GET');

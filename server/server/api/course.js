@@ -104,11 +104,27 @@ const getCourseByID = async (request, reply) => {
     }
 };
 
+const getOtherCourse = async (request, reply) => {
+    try {
+        const dataToken = request.body.studentToken;
+        const response = await CourserHelper.getOtherCourse(dataToken);
+        return reply
+            .status(200)
+            .send({
+                message: 'Get Other Course By Major Success!',
+                response
+            });
+    } catch (error) {
+        return reply.send(GeneralHelper.errorResponse(error))
+    }
+};
+
 Router.get('/list', listCourse);
 Router.post('/add', addCourse);
 Router.delete('/delete', deleteCourse);
 Router.patch('/update', updateCourse);
 Router.get('/course-by-major', Middleware.validateToken, getCourseByMajor);
 Router.get('/course-by-id', Middleware.validateToken, getCourseByID);
+Router.get('/other-course', Middleware.validateToken, getOtherCourse)
 
 module.exports = Router;

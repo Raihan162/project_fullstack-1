@@ -1,4 +1,6 @@
 const Boom = require('boom');
+const { Op } = require("sequelize");
+
 const db = require('../../models/index');
 
 const getCourse = async () => {
@@ -143,6 +145,42 @@ const getCourseByID = async (dataToken) => {
     } catch (error) {
         return Promise.reject(error);
     }
+};
+
+const getOtherCourse = async (dataToken) => {
+    try {
+        const checkRegist = await db.registrations.findAll({
+            where: {
+                users_id: dataToken.id
+            },
+            attributes: ['courses_id']
+        });
+
+        const courseID = checkRegist.map((data) => data.courses_id);
+
+        const response = await db.courses.findAll({
+            where: {
+                id: {
+                    [Op.notIn]: courseID
+                },
+                major_id: dataToken.major_id
+            },
+            attributes: ['id', 'title'],
+            include: [
+                {
+                    model: db.users,
+                    attributes: ['name', 'email', 'contact']
+                },
+                {
+                    model: db.majors,
+                    attributes: ['name']
+                }
+            ]
+        });
+        return Promise.resolve(response);
+    } catch (error) {
+        return Promise.reject(error)
+    }
 }
 
 module.exports = {
@@ -151,5 +189,6 @@ module.exports = {
     deleteCourses,
     updateCourses,
     getCourseByMajor,
-    getCourseByID
+    getCourseByID,
+    getOtherCourse
 };

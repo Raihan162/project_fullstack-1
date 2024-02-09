@@ -5,6 +5,7 @@ import registerStudentSaga from '@pages/Register/saga';
 import loginSaga from '@pages/Login/saga';
 import detailUserSaga from '@pages/StudentInfo/saga';
 import MyCourseSaga from '@pages/MyCourse/saga';
+import registrationSaga from '@pages/Registration/saga';
 
 export default function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     registerStudentSaga(),
     loginSaga(),
     detailUserSaga(),
-    MyCourseSaga()
+    MyCourseSaga(),
+    registrationSaga()
   ]);
 }
