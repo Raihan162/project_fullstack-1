@@ -9,7 +9,8 @@ export const setOtherCourse = (data) => ({
     data
 })
 
-export const addToMyCourse = (data)=>({
+export const addToMyCourse = (data,cb)=>({
     type: ADD_COURSE,
-    data
+    data,
+    cb
 })

@@ -13,11 +13,12 @@ function* getOtherCourseSaga() {
     }
 };
 
-function* doAddCourseSaga({ data }) {
+function* doAddCourseSaga({ data, cb }) {
     yield put(setLoading(true));
     try {
         // console.log(data, '<<<<DATA')
         yield call(addRegistration, data);
+        cb();
     } catch (error) {
         yield put(showPopup('Error', error.message))
     }

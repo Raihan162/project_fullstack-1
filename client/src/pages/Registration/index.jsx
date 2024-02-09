@@ -22,6 +22,9 @@ const Registration = ({ data, dataMyCourse, dataUser }) => {
         dispatch(
             addToMyCourse({
                 courses_id: id
+            }, () => {
+                dispatch(getOtherCourse());
+                dispatch(getCourse());
             })
         )
     };
@@ -29,7 +32,7 @@ const Registration = ({ data, dataMyCourse, dataUser }) => {
     useEffect(() => {
         dispatch(getOtherCourse());
         dispatch(getCourse());
-    }, [dispatch])
+    }, [])
 
     return (
         <div className={classes.container}>
