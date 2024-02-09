@@ -198,10 +198,6 @@ const SecondLayout = ({ locale, theme, children }) => {
                     </IconButton>
                     <Box className={classes.headerWrapper}>
                         <Box className={classes.header}>
-                            {/* <img src={logo} alt="" width={40} /> */}
-                            <Typography variant="h6" noWrap component="div">
-                                Student Name
-                            </Typography>
                         </Box>
                         <div className={classes.contentWrapper}>
                             <div className={classes.toolbar}>
