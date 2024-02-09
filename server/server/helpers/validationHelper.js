@@ -1,11 +1,11 @@
 const Joi = require('joi');
 const Boom = require('boom');
 
-const studentAddValidation = (data) => {
+const studentAddValidation = ({ data }) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     major_id: Joi.number().required(),
-    contact: Joi.string().required(),
+    contact: Joi.number().required(),
     email: Joi.string().required(),
     password: Joi.string().required().min(6)
   });
