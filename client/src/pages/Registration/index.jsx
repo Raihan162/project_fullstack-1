@@ -9,18 +9,27 @@ import classes from './style.module.scss';
 import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectOtherCourse } from './selector';
-import { getOtherCourse } from './actions';
+import { addToMyCourse, getOtherCourse } from './actions';
 import { selectMyCourse } from '@pages/MyCourse/selectors';
 import { getCourse } from '@pages/MyCourse/action';
+import { selectData } from '@pages/StudentInfo/selector';
 
-const Registration = ({ data, dataMyCourse }) => {
+const Registration = ({ data, dataMyCourse, dataUser }) => {
 
     const dispatch = useDispatch();
+
+    const onSubmit = (id) => {
+        dispatch(
+            addToMyCourse({
+                courses_id: id
+            })
+        )
+    };
 
     useEffect(() => {
         dispatch(getOtherCourse());
         dispatch(getCourse());
-    }, [])
+    }, [dispatch])
 
     return (
         <div className={classes.container}>
@@ -49,7 +58,7 @@ const Registration = ({ data, dataMyCourse }) => {
                                                 <TableCell>{value?.title}</TableCell>
                                                 <TableCell>{value?.user?.name}</TableCell>
                                                 <TableCell>
-                                                    <IconButton>
+                                                    <IconButton onClick={() => onSubmit(value?.id)}>
                                                         <AddIcon />
                                                     </IconButton>
                                                 </TableCell>
@@ -117,12 +126,14 @@ const Registration = ({ data, dataMyCourse }) => {
 
 Registration.prototype = {
     data: PropTypes.array,
-    dataMyCourse: PropTypes.array
+    dataMyCourse: PropTypes.array,
+    dataUser: PropTypes.object
 }
 
 const mapStateToProps = createStructuredSelector({
     data: selectOtherCourse,
-    dataMyCourse: selectMyCourse
+    dataMyCourse: selectMyCourse,
+    dataUser: selectData
 })
 
 export default connect(mapStateToProps)(Registration);

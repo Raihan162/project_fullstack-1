@@ -1,4 +1,4 @@
-import { GET_OTHER_COURSE, SET_OTHER_COURSE } from "./constants";
+import { ADD_COURSE, GET_OTHER_COURSE, SET_OTHER_COURSE } from "./constants";
 
 export const getOtherCourse = () => ({
     type: GET_OTHER_COURSE
@@ -6,5 +6,10 @@ export const getOtherCourse = () => ({
 
 export const setOtherCourse = (data) => ({
     type: SET_OTHER_COURSE,
+    data
+})
+
+export const addToMyCourse = (data)=>({
+    type: ADD_COURSE,
     data
 })

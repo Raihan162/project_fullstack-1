@@ -1,5 +1,5 @@
 const Boom = require('boom');
-const db = require('../../models/index')
+const db = require('../../models')
 
 const GeneralHelper = require('../helpers/generalHelper');
 
@@ -31,8 +31,7 @@ const getRegistration = async () => {
 
 const addRegistration = async (courses_id, dataToken) => {
     try {
-
-        const checkStudent = await db.students.findOne({
+        const checkStudent = await db.users.findOne({
             where: {
                 id: dataToken.id
             }
@@ -53,12 +52,13 @@ const addRegistration = async (courses_id, dataToken) => {
         };
 
         const response = await db.registrations.create({
-            students_id: checkStudent.id,
+            users_id: checkStudent.id,
             courses_id: courses_id
         })
 
         return Promise.resolve(response);
     } catch (error) {
+        console.log(error)
         return Promise.reject(GeneralHelper.errorResponse(error));
     };
 };
