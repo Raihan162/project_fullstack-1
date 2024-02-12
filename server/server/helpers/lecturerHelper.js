@@ -1,3 +1,4 @@
+const Boom = require('boom');
 const db = require('../../models/index');
 
 const getLecturerList = async () => {
@@ -32,7 +33,7 @@ const updateLecturer = async (id, name, contact) => {
         });
 
         if (!checkLecturer) {
-            throw new Error('Lecturer doesn`t exist');
+            return Promise.reject(Boom.badRequest('Lecturer doesn`t exist'));
         };
 
         await db.lecturers.update({
@@ -59,7 +60,7 @@ const deleteLecturer = async (id) => {
         });
 
         if (!checkLecturer) {
-            throw new Error('Lecturer doesn`t exist');
+            return Promise.reject(Boom.badRequest('Lecturer doesn`t exist'));
         };
 
         await db.lecturers.destroy({
@@ -74,9 +75,35 @@ const deleteLecturer = async (id) => {
     };
 };
 
+const getMyStudent = async (dataToken) => {
+    try {
+        const response = await db.courses.findAll({
+            where: {
+                users_id: dataToken?.id
+            },
+            include: [
+                {
+                    model: db.registrations,
+                    include: [
+                        {
+                            model: db.users,
+                            attributes: ['id', 'name', 'email', 'contact']
+                        }
+                    ]
+                }
+            ]
+        });
+
+        return Promise.resolve(response)
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
 module.exports = {
     getLecturerList,
     addLecturer,
     deleteLecturer,
-    updateLecturer
+    updateLecturer,
+    getMyStudent
 };

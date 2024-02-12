@@ -42,9 +42,10 @@ const getRegistration = async (request, reply) => {
 
 const deleteRegistration = async (request, reply) => {
     try {
-        const { id } = request.query;
+        const { id } = request.params;
+        const dataToken = request.body.studentToken;
 
-        const response = await RegistrationHelper.deleteRegistration(id);
+        const response = await RegistrationHelper.deleteRegistration(id, dataToken);
 
         return reply
             .status(200)
@@ -83,7 +84,7 @@ const updateRegistration = async (request, reply) => {
 
 Router.post('/add', Middleware.validateToken, addRegistration);
 Router.get('/list', getRegistration);
-Router.delete('/delete', deleteRegistration);
+Router.delete('/delete/:id', Middleware.validateToken, deleteRegistration);
 Router.patch('/update', Middleware.validateToken, updateRegistration);
 
 module.exports = Router;

@@ -9,14 +9,22 @@ import { connect, useDispatch } from 'react-redux';
 import { getCourse } from './action';
 import { selectMyCourse } from './selectors';
 import { createStructuredSelector } from 'reselect';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { selectToken } from '@containers/Client/selectors';
 
-const MyCourse = ({ data }) => {
+const MyCourse = ({ data, token }) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const decryptToken = jwtDecode(token);
 
     useEffect(() => {
         dispatch(getCourse())
-    }, [dispatch])
+        if (!decryptToken.is_student) {
+            navigate('/info');
+        }
+    }, [])
 
     return (
         <div className={classes.container}>
@@ -34,7 +42,7 @@ const MyCourse = ({ data }) => {
                             data ?
                                 data.map((value, index) => {
                                     return (
-                                        <TableRow>
+                                        <TableRow key={index}>
                                             <TableCell>{index + 1}</TableCell>
                                             <TableCell>{value?.course?.title}</TableCell>
                                             <TableCell>{value?.course?.user?.name}</TableCell>
@@ -55,11 +63,13 @@ const MyCourse = ({ data }) => {
 }
 
 MyCourse.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    token: PropTypes.string
 };
 
 const mapStateToProps = createStructuredSelector({
-    data: selectMyCourse
+    data: selectMyCourse,
+    token: selectToken
 });
 
 export default connect(mapStateToProps)(MyCourse);

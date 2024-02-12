@@ -10,6 +10,7 @@ import MyCourseReducer, { storedKey as storedCourseUserState } from '@pages/MyCo
 
 import { mapWithPersistor } from './persistence';
 import registrationReducer, { storedKey as storedRegistrationState } from '@pages/Registration/reducer';
+import MyStudentReducer, { storedKey as storedMyStudentState } from '@pages/MyStudent/reducer';
 
 const storedReducers = {
   app: { reducer: appReducer, whitelist: storedAppState },
@@ -18,7 +19,8 @@ const storedReducers = {
   login: { reducer: loginReducer, whitelist: storedLoginState },
   detailUser: { reducer: detailUserReducer, whitelist: storedDetailUserState },
   courseUser: { reducer: MyCourseReducer, whitelist: storedCourseUserState },
-  otherCourse: { reducer: registrationReducer, whitelist: storedRegistrationState }
+  otherCourse: { reducer: registrationReducer, whitelist: storedRegistrationState },
+  myStudent: { reducer: MyStudentReducer, whitelist: storedMyStudentState }
 };
 
 const temporaryReducers = {

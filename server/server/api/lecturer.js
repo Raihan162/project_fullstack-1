@@ -2,6 +2,8 @@ const Router = require('express').Router();
 
 const Validation = require('../helpers/validationHelper');
 const LecturerHelper = require('../helpers/lecturerHelper');
+const GeneralHelper = require('../helpers/generalHelper');
+const Middleware = require('../middleware/studentMiddleware');
 
 const listLecturer = async (request, reply) => {
     try {
@@ -14,12 +16,7 @@ const listLecturer = async (request, reply) => {
                 response
             });
     } catch (error) {
-        return reply
-            .status(400)
-            .send({
-                message: 'Get All Lecturer Failed!',
-                error: error?.message
-            });
+        return reply.send(GeneralHelper.errorResponse(error));
     };
 };
 
@@ -38,12 +35,7 @@ const addLecturer = async (request, reply) => {
                 response
             });
     } catch (error) {
-        return reply
-            .status(400)
-            .send({
-                message: 'Add Lecturer Failed!',
-                error: error?.message
-            });
+        return reply.send(GeneralHelper.errorResponse(error));
     };
 };
 
@@ -60,12 +52,7 @@ const deleteLecturer = async (request, reply) => {
                 response
             });
     } catch (error) {
-        return reply
-            .status(400)
-            .send({
-                message: 'Delete Lecturer Failed!',
-                error: error?.message
-            });
+        return reply.send(GeneralHelper.errorResponse(error));
     };
 };
 
@@ -83,18 +70,30 @@ const updateLecturer = async (request, reply) => {
                 response
             });
     } catch (error) {
-        return reply
-            .status(400)
-            .send({
-                message: 'Update Lecturer Failed!',
-                error: error?.message
-            });
+        return reply.send(GeneralHelper.errorResponse(error));
     };
 };
+
+const getMyStudent = async (request, reply) => {
+    try {
+        const dataToken = request.body.studentToken;
+        const response = await LecturerHelper.getMyStudent(dataToken);
+
+        return reply
+            .status(200)
+            .send({
+                message: 'Get My Student Success!',
+                response
+            });
+    } catch (error) {
+        return reply.send(GeneralHelper.errorResponse(error));
+    }
+}
 
 Router.get('/list', listLecturer);
 Router.post('/add', addLecturer);
 Router.delete('/delete', deleteLecturer);
 Router.patch('/update', updateLecturer);
+Router.get('/my-student', Middleware.validateToken, getMyStudent);
 
 module.exports = Router;

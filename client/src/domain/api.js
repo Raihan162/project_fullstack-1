@@ -11,7 +11,9 @@ const urls = {
   detailUser: 'user/detail-user',
   courseUser: 'course/course-by-id',
   otherCourse: 'course/other-course',
-  addCourseUser: 'registration/add'
+  addCourseUser: 'registration/add',
+  deleteMyCourse: 'course/delete-course-student',
+  getMystudent: 'lecturer/my-student',
 };
 
 export const callAPI = async (endpoint, method, header = {}, params = {}, data = {}) => {
@@ -36,7 +38,13 @@ export const callAPI = async (endpoint, method, header = {}, params = {}, data =
 
 export const ping = () => callAPI(urls.ping, 'get');
 
-export const register = (data) => callAPI(urls.register, 'POST', {}, {}, data);
+export const register = (data) => {
+  const header = {
+    'Content-Type': 'multiplatform/data; charset=UTF-8',
+  };
+
+  callAPI(urls.register, 'POST', header, {}, data)
+};
 
 export const login = (formData) => callAPI(urls.login, 'POST', {}, {}, formData);
 
@@ -50,4 +58,8 @@ export const otherCourse = () => callAPI(urls.otherCourse, 'GET');
 
 export const getMajorAPI = () => callAPI(urls.getMajor, 'GET');
 
-export const addRegistration = (data) => callAPI(urls.addCourseUser, 'POST', {}, {}, data)
+export const addRegistration = (data) => callAPI(urls.addCourseUser, 'POST', {}, {}, data);
+
+export const deleteCourseOnRegistration = (data) => callAPI(urls.deleteMyCourse, 'DELETE',{},{},data);
+
+export const getMyStudent = () => callAPI(urls.getMystudent, 'GET');

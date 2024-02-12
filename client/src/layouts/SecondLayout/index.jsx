@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
+import { jwtDecode } from 'jwt-decode';
 
 import { setLocale, setTheme } from '@containers/App/actions';
 import { selectLocale, selectTheme } from '@containers/App/selectors';
@@ -15,6 +16,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
+import PeopleIcon from '@mui/icons-material/People';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -40,12 +42,14 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 // import logo from '../../assets/logo.png';
 import classes from './style.module.scss';
 import { setLogin, setToken } from '@containers/Client/actions';
+import { selectToken } from '@containers/Client/selectors';
 
 const drawerWidth = 260;
 
-const SecondLayout = ({ locale, theme, children }) => {
+const SecondLayout = ({ locale, theme, children, token }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const decryptToken = jwtDecode(token)
 
     const [menuPosition, setMenuPosition] = useState(null);
     const open = Boolean(menuPosition);
@@ -86,22 +90,6 @@ const SecondLayout = ({ locale, theme, children }) => {
         dispatch(setTheme(theme === 'light' ? 'dark' : 'light'));
     };
 
-    const toDashboard = () => {
-        navigate('/dashboard');
-    };
-
-    const toStudentInfo = () => {
-        navigate('/student-info');
-    };
-
-    const toMyCourse = () => {
-        navigate('/my-course');
-    };
-
-    const toRegistratioin = () => {
-        navigate('/registration');
-    };
-
     const handleLogout = () => {
         dispatch(setLogin(false));
         dispatch(setToken(null));
@@ -112,19 +100,8 @@ const SecondLayout = ({ locale, theme, children }) => {
         <div>
             <Toolbar />
             <Divider />
-            <Link to="/dashboard">
-                <List>
-                    <ListItem disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <DashboardIcon />
-                            </ListItemIcon>
-                            <FormattedMessage id="nav_dashboard" />
-                        </ListItemButton>
-                    </ListItem>
-                </List>
-            </Link>
-            <Link to="/student-info">
+
+            <Link to="/info">
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton>
@@ -136,31 +113,54 @@ const SecondLayout = ({ locale, theme, children }) => {
                     </ListItem>
                 </List>
             </Link>
-            <Link to="/my-course">
-                <List>
-                    <ListItem disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <FormatListBulletedIcon />
-                            </ListItemIcon>
-                            <FormattedMessage id="nav_my_course" />
-                        </ListItemButton>
-                    </ListItem>
-                </List>
-            </Link>
 
-            <Link to="/registration">
-                <List>
-                    <ListItem disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <EditNoteIcon />
-                            </ListItemIcon>
-                            <FormattedMessage id="nav_registration" />
-                        </ListItemButton>
-                    </ListItem>
-                </List>
-            </Link>
+            {
+                decryptToken.is_student ?
+                    <Link to="/my-course">
+                        <List>
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <FormatListBulletedIcon />
+                                    </ListItemIcon>
+                                    <FormattedMessage id="nav_my_course" />
+                                </ListItemButton>
+                            </ListItem>
+                        </List>
+                    </Link>
+                    :
+                    <Link to="/my-student">
+                        <List>
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <PeopleIcon />
+                                    </ListItemIcon>
+                                    <FormattedMessage id="nav_my_student" />
+                                </ListItemButton>
+                            </ListItem>
+                        </List>
+                    </Link>
+            }
+
+            {
+                decryptToken.is_student ?
+                    <Link to="/registration">
+                        <List>
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <EditNoteIcon />
+                                    </ListItemIcon>
+                                    <FormattedMessage id="nav_registration" />
+                                </ListItemButton>
+                            </ListItem>
+                        </List>
+                    </Link>
+                    :
+                    null
+            }
+
             <Divider />
             <List onClick={handleLogout}>
                 <ListItem disablePadding>
@@ -271,12 +271,14 @@ const SecondLayout = ({ locale, theme, children }) => {
 const mapStateToProps = createStructuredSelector({
     locale: selectLocale,
     theme: selectTheme,
+    token: selectToken,
 });
 
 SecondLayout.propTypes = {
     locale: PropTypes.string,
     theme: PropTypes.string,
     children: PropTypes.element.isRequired,
+    token: PropTypes.string,
 };
 
 export default injectIntl(connect(mapStateToProps)(SecondLayout));

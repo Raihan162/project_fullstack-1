@@ -14,13 +14,15 @@ export default {
   register_contact: 'Nomor Telepon',
   register_password: 'Kata Sandi',
   register_major: 'Jurusan',
+  register_image: 'Pilih gambar',
 
   login: 'Masuk',
   login_dont_have_account: "Belum memiliki akun? Daftar disini",
 
   nav_dashboard: 'Dashboard',
-  nav_student_info: 'Informasi Mahasiswa',
+  nav_student_info: 'Informasi',
   nav_my_course: 'Mata Kuliah Saya',
+  nav_my_student: 'Mahasiswa Saya',
   nav_registration: 'Registrasi',
   nav_logout: 'Keluar',
 
@@ -29,6 +31,11 @@ export default {
   student_info_contact: 'Nomor Telepon',
   student_info_major: 'Jurusan',
   student_info_change_photo: 'Ganti Foto',
+
+  table_name: 'Nama',
+  table_action: 'Aksi',
+  table_course: 'Mata kuliah',
+  table_empty: 'Tidak ada mahasiswa',
 
   submit: 'Kirim',
   next: 'Selanjutnya',

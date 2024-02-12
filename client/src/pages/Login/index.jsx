@@ -41,7 +41,7 @@ export default function Login() {
       password: encryptPayload(login?.password)
     }
     dispatch(doLogin(loginUser, () => {
-      navigate('/dashboard');
+      navigate('/info');
     }))
   }
 

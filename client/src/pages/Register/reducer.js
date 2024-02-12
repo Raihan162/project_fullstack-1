@@ -8,7 +8,7 @@ export const initialState = {
     major: []
 };
 
-export const storedKey = ['step', 'user']
+export const storedKey = ['step', 'user', 'major']
 
 const registerReducer = (state = initialState, action) =>
     produce(state, (draft) => {

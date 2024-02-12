@@ -5,10 +5,10 @@ import Home from '@pages/Home';
 import Login from '@pages/Login';
 import Register from '@pages/Register';
 import NotFound from '@pages/NotFound';
-import Dashboard from '@pages/Dashboard';
 import StudentInfo from '@pages/StudentInfo';
 import MyCourse from '@pages/MyCourse';
 import Registration from '@pages/Registration';
+import MyStudent from '@pages/MyStudent';
 
 const routes = [
   {
@@ -33,14 +33,7 @@ const routes = [
     layout: MainLayout,
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    protected: true,
-    component: Dashboard,
-    layout: SecondLayout,
-  },
-  {
-    path: '/student-info',
+    path: '/info',
     name: 'Stundent Info',
     protected: true,
     component: StudentInfo,
@@ -51,6 +44,13 @@ const routes = [
     name: 'My Course',
     protected: true,
     component: MyCourse,
+    layout: SecondLayout,
+  },
+  {
+    path: '/my-student',
+    name: 'My Course',
+    protected: true,
+    component: MyStudent,
     layout: SecondLayout,
   },
   {

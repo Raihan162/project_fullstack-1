@@ -138,7 +138,7 @@ const getCourseByID = async (dataToken) => {
                 model: db.users,
                 attributes: ['id', 'name', 'email', 'contact']
             }],
-            attributes: ['registration_date']
+            attributes: ['id', 'registration_date']
         });
 
         return Promise.resolve(response);
@@ -181,7 +181,33 @@ const getOtherCourse = async (dataToken) => {
     } catch (error) {
         return Promise.reject(error)
     }
-}
+};
+
+const deleteCourseStudent = async (users_id, courses_id) => {
+    try {
+        const checkCourseStudent = await db.registrations.findOne({
+            where: {
+                users_id,
+                courses_id
+            }
+        });
+
+        if (!checkCourseStudent) {
+            return Promise.reject(Boom.badRequest('Course student not found'));
+        };
+
+        await db.registrations.destroy({
+            where: {
+                users_id,
+                courses_id
+            }
+        });
+
+        return Promise.resolve([]);
+    } catch (error) {
+        return Promise.reject(error);
+    };
+};
 
 module.exports = {
     getCourse,
@@ -190,5 +216,6 @@ module.exports = {
     updateCourses,
     getCourseByMajor,
     getCourseByID,
-    getOtherCourse
+    getOtherCourse,
+    deleteCourseStudent
 };

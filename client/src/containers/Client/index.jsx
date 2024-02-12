@@ -14,8 +14,6 @@ const Client = ({ login, token, children }) => {
     // console.log(decryptToken, '<<< DATA TOKEN')
     if (!login) {
       navigate('/login');
-    } else if (!decryptToken.is_student) {
-      navigate('/test')
     }
   }, [login, navigate]);
 

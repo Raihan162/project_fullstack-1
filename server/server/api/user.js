@@ -5,22 +5,25 @@ const Validation = require('../helpers/validationHelper');
 const UserHelper = require('../helpers/userHelper');
 const GeneralHelper = require('../helpers/generalHelper');
 const Middleware = require('../middleware/studentMiddleware');
-const { decryptPayload } = require('../utils/decryptHelper');
+const { decryptPayload, decryptTextPayload, decryptObjectPayload } = require('../utils/decryptHelper');
 const secretKey = 'super_strong_key';
 
 const register = async (request, reply) => {
     try {
         let data = request.body;
+        console.log(request.body)
 
         let name = data.name;
-        let email = decryptPayload(data?.email);
-        let contact = decryptPayload(data?.contact);
-        let major_id = Number(decryptPayload(data?.major_id));
-        let password = decryptPayload(data?.password);
+        let email = decryptTextPayload(data?.email);
+        let contact = decryptTextPayload(data?.contact);
+        let major_id = Number(decryptTextPayload(data?.major_id));
+        let password = decryptTextPayload(data?.password);
+        let imageUrl = decryptObjectPayload(data?.imageUrl);
+        console.log(name, email, contact, major_id, password, imageUrl, '<<<<<<< API USER')
 
-        Validation.studentAddValidation({ name, email, contact, major_id, password })
+        Validation.studentAddValidation({ name, email, contact, major_id, password, imageUrl })
 
-        const response = await UserHelper.register(name, email, contact, major_id, password)
+        const response = await UserHelper.register(name, email, contact, major_id, password, imageUrl)
 
         return reply.send({
             message: 'Register Success',

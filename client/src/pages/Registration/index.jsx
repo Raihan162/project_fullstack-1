@@ -9,14 +9,19 @@ import classes from './style.module.scss';
 import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectOtherCourse } from './selector';
-import { addToMyCourse, getOtherCourse } from './actions';
+import { addToMyCourse, deleteMyCourse, getOtherCourse } from './actions';
 import { selectMyCourse } from '@pages/MyCourse/selectors';
 import { getCourse } from '@pages/MyCourse/action';
 import { selectData } from '@pages/StudentInfo/selector';
+import { selectToken } from '@containers/Client/selectors';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
-const Registration = ({ data, dataMyCourse, dataUser }) => {
+const Registration = ({ data, dataMyCourse, dataUser, token }) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const decryptToken = jwtDecode(token);
 
     const onSubmit = (id) => {
         dispatch(
@@ -32,6 +37,9 @@ const Registration = ({ data, dataMyCourse, dataUser }) => {
     useEffect(() => {
         dispatch(getOtherCourse());
         dispatch(getCourse());
+        if (!decryptToken.is_student) {
+            navigate('/info')
+        }
     }, [])
 
     return (
@@ -53,8 +61,8 @@ const Registration = ({ data, dataMyCourse, dataUser }) => {
                         </TableHead>
                         <TableBody>
                             {
-                                data ?
-                                    data.map((value, index) => {
+                                data?.length !== 0 ?
+                                    data?.map((value, index) => {
                                         return (
                                             <TableRow key={index}>
                                                 <TableCell>{index + 1}</TableCell>
@@ -71,7 +79,7 @@ const Registration = ({ data, dataMyCourse, dataUser }) => {
                                     })
                                     :
                                     <TableRow>
-                                        <TableCell>Data tidak ada</TableCell>
+                                        <TableCell colSpan={4} align='center'>Data tidak ada</TableCell>
                                     </TableRow>
                             }
                         </TableBody>
@@ -90,30 +98,24 @@ const Registration = ({ data, dataMyCourse, dataUser }) => {
                                 <TableCell>No</TableCell>
                                 <TableCell>Course</TableCell>
                                 <TableCell>Lecture</TableCell>
-                                <TableCell>Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {
-                                dataMyCourse ?
-                                    dataMyCourse.map((value, index) => {
+                                dataMyCourse?.length !== 0 ?
+                                    dataMyCourse?.map((value, index) => {
                                         return (
                                             <TableRow key={index}>
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>{
                                                     value?.course?.title}</TableCell>
                                                 <TableCell>{value?.course?.user?.name}</TableCell>
-                                                <TableCell>
-                                                    <IconButton>
-                                                        <DeleteIcon />
-                                                    </IconButton>
-                                                </TableCell>
                                             </TableRow>
                                         )
                                     })
                                     :
                                     <TableRow>
-                                        <TableCell>
+                                        <TableCell colSpan={4} align='center'>
                                             Data tidak ada.
                                         </TableCell>
                                     </TableRow>
@@ -130,13 +132,15 @@ const Registration = ({ data, dataMyCourse, dataUser }) => {
 Registration.prototype = {
     data: PropTypes.array,
     dataMyCourse: PropTypes.array,
-    dataUser: PropTypes.object
+    dataUser: PropTypes.object,
+    token: PropTypes.string
 }
 
 const mapStateToProps = createStructuredSelector({
     data: selectOtherCourse,
     dataMyCourse: selectMyCourse,
-    dataUser: selectData
+    dataUser: selectData,
+    token: selectToken
 })
 
 export default connect(mapStateToProps)(Registration);

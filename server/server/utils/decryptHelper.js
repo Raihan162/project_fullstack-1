@@ -1,21 +1,26 @@
-const { AES, enc} = require('crypto-js');
+const CryptoJS = require('crypto-js');
 // const config = require('@config/index')
 
 const CRYPTO_SECRET = 'secret'
 
-const decryptPayload = data => {
+const decryptObjectPayload = (token) => {
     try {
-        if (typeof data === 'object') {
-            return JSON.parse(AES.decrypt(data, CRYPTO_SECRET).toString(enc.Utf8));
-        }
-        if (typeof data === 'string') {
-            return AES.decrypt(data, CRYPTO_SECRET).toString(enc.Utf8);
-        }
+        const bytes = CryptoJS.AES.decrypt(token, CRYPTO_SECRET)
+        return JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
     } catch (error) {
-        Promise.reject(error)
+        return null
+    }
+}
+const decryptTextPayload = (token) => {
+    try {
+        const bytes = CryptoJS.AES.decrypt(token, CRYPTO_SECRET)
+        return bytes.toString(CryptoJS.enc.Utf8)
+    } catch (error) {
+        return null
     }
 }
 
 module.exports = {
-    decryptPayload
+    decryptObjectPayload,
+    decryptTextPayload,
 }

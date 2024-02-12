@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const db = require('../../models');
 const GeneralHelper = require('../helpers/generalHelper');
+const { uploadToCloudinary } = require('../services/cloudinary');
 
 const jwtSecretToken = 'super_strong_key';
 const jwtExpiresIn = '24h';
@@ -26,7 +27,7 @@ const __generateToken = (data) => {
     return jwt.sign(data, jwtSecretToken, { expiresIn: jwtExpiresIn });
 }
 
-const register = async (name, email, contact, major_id, password) => {
+const register = async (name, email, contact, major_id, password, imageUrl) => {
     try {
         const checkEmail = await db.users.findOne({
             where: {
@@ -34,22 +35,24 @@ const register = async (name, email, contact, major_id, password) => {
                 is_student: true
             }
         });
-        console.log(checkEmail)
         if (!_.isEmpty(checkEmail)) {
             return Promise.reject(Boom.badRequest('Email already registered'))
         };
 
-        const hashedPass = __hashPassword(password);
+        let imageResult = await uploadToCloudinary(imageUrl, 'image');
+        console.log(imageResult, '<<<<<< IMAGE');
 
-        await db.users.create({
-            id: uuidv4(),
-            name,
-            major_id,
-            contact,
-            email,
-            password: hashedPass,
-            is_student: true
-        });
+        // const hashedPass = __hashPassword(password);
+
+        // await db.users.create({
+        //     id: uuidv4(),
+        //     name,
+        //     major_id,
+        //     contact,
+        //     email,
+        //     password: hashedPass,
+        //     is_student: true
+        // });
 
         return Promise.resolve(true);
     } catch (error) {

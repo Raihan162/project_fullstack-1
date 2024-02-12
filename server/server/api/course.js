@@ -119,12 +119,30 @@ const getOtherCourse = async (request, reply) => {
     }
 };
 
+const deleteCourseStudent = async (request, reply) => {
+    try {
+        const { users_id, courses_id } = request.body;
+
+        const response = await CourserHelper.deleteCourseStudent(users_id, courses_id);
+
+        return reply
+            .status(200)
+            .send({
+                message: 'Delete Course Success!',
+                response
+            });
+    } catch (error) {
+        return reply.send(GeneralHelper.errorResponse(error));
+    };
+};
+
 Router.get('/list', listCourse);
 Router.post('/add', addCourse);
 Router.delete('/delete', deleteCourse);
 Router.patch('/update', updateCourse);
 Router.get('/course-by-major', Middleware.validateToken, getCourseByMajor);
 Router.get('/course-by-id', Middleware.validateToken, getCourseByID);
-Router.get('/other-course', Middleware.validateToken, getOtherCourse)
+Router.get('/other-course', Middleware.validateToken, getOtherCourse);
+Router.delete('/delete-course-student', deleteCourseStudent)
 
 module.exports = Router;
