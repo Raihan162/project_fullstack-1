@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     major_id: DataTypes.INTEGER,
     password: DataTypes.STRING,
     is_student: DataTypes.BOOLEAN,
-    date_in: DataTypes.STRING
+    imageUrl: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'users',

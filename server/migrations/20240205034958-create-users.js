@@ -28,7 +28,7 @@ module.exports = {
       is_student: {
         type: Sequelize.BOOLEAN
       },
-      date_in: {
+      imageUrl: {
         type: Sequelize.STRING
       },
       createdAt: {

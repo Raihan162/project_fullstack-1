@@ -11,15 +11,13 @@ const secretKey = 'super_strong_key';
 const register = async (request, reply) => {
     try {
         let data = request.body;
-        console.log(request.body)
 
         let name = data.name;
         let email = decryptTextPayload(data?.email);
         let contact = decryptTextPayload(data?.contact);
         let major_id = Number(decryptTextPayload(data?.major_id));
         let password = decryptTextPayload(data?.password);
-        let imageUrl = decryptObjectPayload(data?.imageUrl);
-        console.log(name, email, contact, major_id, password, imageUrl, '<<<<<<< API USER')
+        let imageUrl = data?.imageUrl;
 
         Validation.studentAddValidation({ name, email, contact, major_id, password, imageUrl })
 
@@ -40,8 +38,8 @@ const loginStudent = async (request, reply) => {
 
         const data = request.body;
 
-        let email = decryptPayload(data?.email);
-        let password = decryptPayload(data?.password);
+        let email = decryptTextPayload(data?.email);
+        let password = decryptTextPayload(data?.password);
 
         const response = await UserHelper.loginStudent(email, password)
         return reply.send({

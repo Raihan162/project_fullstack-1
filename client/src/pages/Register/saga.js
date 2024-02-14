@@ -6,6 +6,7 @@ import { setMajor } from "./actions";
 
 function* registerStudent({ user, cb }) {
     try {
+        console.log(user, '<<<<< USER SAGA');
         yield call(register, user);
         cb();
     } catch (error) {
@@ -18,7 +19,7 @@ function* getMajor() {
         const response = yield call(getMajorAPI)
         yield put(setMajor(response?.response))
     } catch (error) {
-        
+
     }
 }
 

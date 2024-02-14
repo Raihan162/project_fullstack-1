@@ -39,20 +39,18 @@ const register = async (name, email, contact, major_id, password, imageUrl) => {
             return Promise.reject(Boom.badRequest('Email already registered'))
         };
 
-        let imageResult = await uploadToCloudinary(imageUrl, 'image');
-        console.log(imageResult, '<<<<<< IMAGE');
+        const hashedPass = __hashPassword(password);
 
-        // const hashedPass = __hashPassword(password);
-
-        // await db.users.create({
-        //     id: uuidv4(),
-        //     name,
-        //     major_id,
-        //     contact,
-        //     email,
-        //     password: hashedPass,
-        //     is_student: true
-        // });
+        await db.users.create({
+            id: uuidv4(),
+            name,
+            major_id,
+            contact,
+            email,
+            password: hashedPass,
+            is_student: true,
+            imageUrl
+        });
 
         return Promise.resolve(true);
     } catch (error) {

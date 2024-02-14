@@ -70,23 +70,16 @@ export default function SignUp() {
 
     const onSubmit = () => {
         try {
-            // let user = {
-            //     name: userStudent.name,
-            //     email: encryptPayload(userStudent.email),
-            //     contact: encryptPayload(userStudent.contact),
-            //     password: encryptPayload(userStudent.password),
-            //     major_id: encryptPayload(String(userStudent.major_id))
-            // }
-            let user = new FormData();
-            user.append('name', userStudent.name);
-            user.append('email', encryptPayload(userStudent.email));
-            user.append('contact', encryptPayload(userStudent.contact));
-            user.append('password', encryptPayload(userStudent.password));
-            user.append('major_id', encryptPayload(String(userStudent.major_id)));
-            user.append('imageUrl', encryptPayload(userStudent.imageUrl));
+            let user = {
+                name: userStudent.name,
+                email: encryptPayload(userStudent.email),
+                contact: encryptPayload(userStudent.contact),
+                password: encryptPayload(userStudent.password),
+                major_id: encryptPayload(String(userStudent.major_id)),
+                imageUrl: null
+            }
 
             dispatch(setUser(user, () => {
-                // dispatch(setUser(userStudent))
                 dispatch(setStep(1));
                 navigate('/login');
             }))
